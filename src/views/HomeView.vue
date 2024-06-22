@@ -32,7 +32,7 @@
     <el-dialog v-model="dialogVisible" title="sourceMap源码映射" width="500">
       <el-tabs v-model="tabActiveName" class="demo-tabs">
         <el-tab-pane label="本地上传" name="local">
-          <el-upload drag @before-upload="sourceMapUpload">
+          <el-upload drag :before-upload="sourceMapUpload">
             <i class="el-icon-upload"></i>
             <div>将文件拖到此处，或者<em>点击上传</em></div>
           </el-upload>
