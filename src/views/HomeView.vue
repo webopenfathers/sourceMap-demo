@@ -7,7 +7,7 @@
         :title="item.source"
         :name="index"
       >
-        <el-row>
+        <el-row :gutter="20">
           <el-col :span="20">
             <div>{{ item.fileName }}</div>
           </el-col>
@@ -16,6 +16,15 @@
               映射源码
             </el-button>
           </el-col>
+        </el-row>
+
+        <el-row :gutter="20">
+          <template v-if="item.origin">
+            {{ item.origin }}
+          </template>
+          <template v-else>
+            <div>{{ item.fileName }}</div>
+          </template>
         </el-row>
       </el-collapse-item>
     </el-collapse>
@@ -36,7 +45,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import sourceMap from 'source-map-js'
-import { Elmessage } from 'element-plus'
+import { ElMessage } from 'element-plus'
 
 const dialogVisible = ref(false)
 let js_error = ref<any>([])
@@ -70,17 +79,19 @@ const openDialog = (item: any, index: number) => {
   }
 }
 
-const sourceMapUpload = async (file: any) => {
+const sourceMapUpload = (file: any) => {
   // 判断上传文件的后缀是否是.map后缀
   if (!file.name.endsWith('.map')) {
-    Elmessage.error('请正确上传sourceMap文件')
+    ElMessage.error('请正确上传sourceMap文件')
     return
   }
 
   const reader = new FileReader()
   reader.readAsText(file, 'utf-8')
-  reader.onload = (e) => {
-    // const source
+  reader.onload = async (e) => {
+    const code = await getSource(e.target?.result, stackFrameObj.line, stackFrameObj.column)
+    js_error.value.stack_frames[stackFrameObj.index].origin = code
+    dialogVisible.value = false
   }
 }
 
@@ -101,7 +112,7 @@ const getSource = async (sourcemap: any, line: number, column: number) => {
       column: originalPosition.column
     }
   } catch (error) {
-    Elmessage.error('sourceMap文件解析失败')
+    ElMessage.error('sourceMap文件解析失败')
   }
 }
 </script>
