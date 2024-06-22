@@ -9,11 +9,11 @@ export default defineConfig({
   base: './',
   plugins: [vue(), vueJsx()],
   // 构建配置
-  // build: {
-  //   outDir: 'dist',
-  //   sourcemap: true,
-  //   emptyOutDir: true
-  // },
+  build: {
+    outDir: 'dist',
+    sourcemap: true,
+    emptyOutDir: true
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
