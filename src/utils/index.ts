@@ -1,5 +1,5 @@
 import axios from 'axios'
-import sourceMap from 'source-map'
+import sourceMap from 'source-map-js'
 const getSourceMap = async (url: string) => {
   const res = await axios.get(url)
   return res
