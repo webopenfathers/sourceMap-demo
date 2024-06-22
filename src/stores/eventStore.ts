@@ -12,8 +12,8 @@ export const useEventStore = defineStore('event', {
     }
   },
   actions: {
-    addEvent(event: any) {
-      this.events.push(event)
+    addEvent(events: eventWithTime[]) {
+      this.events = events
     },
 
     getEvent() {

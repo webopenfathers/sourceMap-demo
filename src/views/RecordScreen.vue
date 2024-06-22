@@ -63,7 +63,7 @@
 <script lang="ts" setup>
 import * as rrweb from 'rrweb'
 import { reactive } from 'vue'
-import { useEventStore } from '../stores/eventStore'
+import { useEventStore } from '@/stores/eventStore'
 
 const eventStore = useEventStore()
 let events = []
