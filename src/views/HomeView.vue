@@ -19,14 +19,35 @@
         </el-row>
       </el-collapse-item>
     </el-collapse>
+    <!-- 弹框 -->
+    <el-dialog v-model="dialogVisible" title="sourceMap源码映射" width="500">
+      <el-tabs v-model="tabActiveName" class="demo-tabs">
+        <el-tab-pane label="本地上传" name="local">
+          <el-upload drag @before-upload="sourceMapUpload">
+            <i class="el-icon-upload"></i>
+            <div>将文件拖到此处，或者<em>点击上传</em></div>
+          </el-upload>
+        </el-tab-pane>
+        <el-tab-pane label="远程加载" name="remote">远程加载</el-tab-pane>
+      </el-tabs>
+    </el-dialog>
   </div>
 </template>
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
+import sourceMap from 'source-map-js'
+import { Elmessage } from 'element-plus'
 
+const dialogVisible = ref(false)
 let js_error = ref<any>([])
 let isError = ref(false)
 let activeName = ref(0)
+let tabActiveName = ref('local')
+let stackFrameObj = {
+  line: 0,
+  column: 0,
+  index: 0
+}
 
 onMounted(() => {
   try {
@@ -40,5 +61,47 @@ onMounted(() => {
   }
 })
 
-const openDialog = () => {}
+const openDialog = (item: any, index: number) => {
+  dialogVisible.value = true
+  stackFrameObj = {
+    line: item.lineNumber,
+    column: item.columnNumber,
+    index: index
+  }
+}
+
+const sourceMapUpload = async (file: any) => {
+  // 判断上传文件的后缀是否是.map后缀
+  if (!file.name.endsWith('.map')) {
+    Elmessage.error('请正确上传sourceMap文件')
+    return
+  }
+
+  const reader = new FileReader()
+  reader.readAsText(file, 'utf-8')
+  reader.onload = (e) => {
+    // const source
+  }
+}
+
+const getSource = async (sourcemap: any, line: number, column: number) => {
+  try {
+    const consumer = await new sourceMap.SourceMapConsumer(JSON.parse(sourcemap))
+    // 通过报错的位置查找对应的源文件的名称已经报错行数
+    const originalPosition = consumer.originalPositionFor({
+      line,
+      column
+    })
+
+    const source = consumer.sourceContentFor(originalPosition.source)
+
+    return {
+      source,
+      line: originalPosition.line,
+      column: originalPosition.column
+    }
+  } catch (error) {
+    Elmessage.error('sourceMap文件解析失败')
+  }
+}
 </script>
