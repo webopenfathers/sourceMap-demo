@@ -12,9 +12,6 @@ export default {
     origin: Object
   },
 
-  mounted() {
-    this.codeStr = this.code
-  },
   methods: {
     preLine() {
       const line = this.origin.line
