@@ -18,6 +18,8 @@
     "element-plus": "^2.7.6",
     "error-stack-parser": "^2.1.4",
     "pinia": "^2.1.7",
+    "rrweb": "2.0.0-alpha.4",
+    "rrweb-player": "1.0.0-alpha.4",
     "source-map-js": "^1.2.0",
     "vue": "^3.4.29",
     "vue-router": "^4.3.3"

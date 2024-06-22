@@ -21,6 +21,11 @@ const router = createRouter({
       path: '/trigger',
       name: 'trigger',
       component: () => import('../views/ErrorView.vue')
+    },
+    {
+      path: '/record',
+      name: 'record',
+      component: () => import('../views/RecordScreen.vue')
     }
   ]
 })
