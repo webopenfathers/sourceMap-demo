@@ -21,6 +21,7 @@ onMounted(() => {
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/trigger">触发js异常</RouterLink>
       </nav>
     </div>
   </header>
