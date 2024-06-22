@@ -1,7 +1,7 @@
 <template>
   <div class="pre-code">
     <div class="error-detail">
-      <pre class="error-code" v-html="preLine"></pre>
+      <pre class="error-code" v-html="preLine()"></pre>
     </div>
   </div>
 </template>
@@ -18,7 +18,7 @@ export default {
   methods: {
     preLine() {
       const line = this.origin.line
-      const originCodeLine = this.origin.source.split('\n')
+      const originCodeLine = this.origin.source.split('\r\n')
       const len = originCodeLine.length - 1
       const start = line - 3 >= 0 ? line - 3 : 0
       const end = start + 5 >= len ? len : start + 5 // 最多展示6行
