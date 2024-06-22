@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@rrweb/types':
+        specifier: 2.0.0-alpha.15
+        version: 2.0.0-alpha.15
       axios:
         specifier: ^1.7.2
         version: 1.7.2

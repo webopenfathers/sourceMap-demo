@@ -63,7 +63,9 @@
 <script lang="ts" setup>
 import * as rrweb from 'rrweb'
 import { reactive } from 'vue'
+import { useEventStore } from '../stores/eventStore'
 
+const eventStore = useEventStore()
 let events = []
 let stopFn = null
 const form = reactive({
@@ -90,6 +92,7 @@ const onStart = () => {
 const onStop = () => {
   if (!stopFn) return
   stopFn()
+  eventStore.addEvent(events)
 }
 
 const onSubmit = () => {
